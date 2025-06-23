@@ -1,0 +1,8 @@
+-*- mode: compilation; default-directory: "~/.config/doom/" -*-
+Comint started at Mon Dec 23 22:52:45
+
+/Users/rinichimrt/.nvm/versions/node/v22.11.0/bin/npm -g --prefix /Users/rinichimrt/.emacs.d/.local/cache/.cache/lsp/npm/copilot-node-server install copilot-node-server\@1.41.0
+
+added 1 package in 1s
+
+Comint finished at Mon Dec 23 22:52:47
