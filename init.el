@@ -195,10 +195,8 @@
        (default +bindings +smartparens))
 
 
-;; パッケージ管理機能の初期化
-(require 'package)
-;; パッケージのダウンロード先としてMELPAリポジトリを追加
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-
+;; ;; パッケージ管理機能の初期化
+;; (require 'package)
+;; ;; パッケージのダウンロード先としてMELPAリポジトリを追加
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; (package-initialize)

@@ -60,6 +60,7 @@
 (map! :map global-map
       "C-c r" #'query-replace)
 
+(map! :nvi "C-f" #'tab-bar-switch-to-last-tab)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; 4. パッケージごとの詳細設定 (Package-specific Configurations)
@@ -201,9 +202,9 @@
   (mini-frame-mode 1))
 
 (setq x-gtk-resize-child-frames 'resize-mode)
-(custom-set-variables
- '(mini-frame-show-parameters
-   '((top . 0.5)
-     (width . 0.8)
-     (left . 0.5)
-     (height . 15))))
+;; (custom-set-variables
+;;  '(mini-frame-show-parameters
+;;    '((top . 0.5)
+;;      (width . 0.8)
+;;      (left . 0.5)
+;;      (height . 25))))
