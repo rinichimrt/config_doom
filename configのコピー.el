@@ -154,6 +154,8 @@
 ;; org-computerの設定
 (use-package org
   :init
+  (setq org-directory "/Users/rinichimrt/Library/CloudStorage/Box-Box/chri22024/Org/")
+
   (setq org-directory "~~/Library/CloudStorage/Box-Box/chri22024/Tasks/2025-Tasks/test.org"
         org-daily-tasks-file (format "%s/tasks.org" org-directory))
   :custom

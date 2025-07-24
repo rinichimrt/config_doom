@@ -70,53 +70,52 @@
 ;; (setq org-directory "~/Library/CloudStorage/Box-Box/chri22024/Tasks/2025-Tasks/")
 
 ;; `org` モジュールが読み込まれた後に実行される設定をここにまとめます。
-(after! org
-  ;; --- Org Capture ---
-  ;; キャプチャテンプレートを設定します。
-  (setq org-capture-templates
-        '(("d" "Weekdays TODO" entry
-           (file+headline (format "%s/tasks.org" org-directory) "Daily Tasks")
-           "%[~/.doom.d/assets/org-templates/weekdays-todo.org]" :prepend t)
-          ("w" "Weekends TODO" entry
-           (file+headline (format "%s/tasks.org" org-directory) "Daily Tasks")
-           "%[~/.doom.d/assets/org-templates/weekends-todo.org]" :prepend t)))
+;; --- Org Capture ---
+;; キャプチャテンプレートを設定します。
+(setq org-capture-templates
+'(("d" "Weekdays TODO" entry
+        (file+headline (format "%s/tasks.org" org-directory) "Daily Tasks")
+        "%[~/.doom.d/assets/org-templates/weekdays-todo.org]" :prepend t)
+        ("w" "Weekends TODO" entry
+        (file+headline (format "%s/tasks.org" org-directory) "Daily Tasks")
+        "%[~/.doom.d/assets/org-templates/weekends-todo.org]" :prepend t)))
 
-  ;; --- Org Pomodoro ---
-  ;; ポモドーロタイマーのリーダーキーを設定します (SPC o p)
-  (map! :leader
-        :desc "Start Pomodoro" "o p" #'org-pomodoro)
+;; --- Org Pomodoro ---
+;; ポモドーロタイマーのリーダーキーを設定します (SPC o p)
+(map! :leader
+:desc "Start Pomodoro" "o p" #'org-pomodoro)
 
-  ;; ポモドーロの各種通知音を無効化します。
-  (setq org-pomodoro-finished-sound nil
-        org-pomodoro-short-break-sound nil
-        org-pomodoro-long-break-sound nil)
+;; ポモドーロの各種通知音を無効化します。
+(setq org-pomodoro-finished-sound nil
+org-pomodoro-short-break-sound nil
+org-pomodoro-long-break-sound nil)
 
-  ;; macOSのterminal-notifierを使ってデスクトップ通知を出すための関数を定義します。
-  (defun rinichi/org-pomodoro-notify (msg)
-    "Use terminal-notifier to show MSG as a notification."
-    (start-process "org-pomodoro-notify" nil "terminal-notifier"
-                   "-title" "Org Pomodoro"
-                   "-message" msg))
+;; macOSのterminal-notifierを使ってデスクトップ通知を出すための関数を定義します。
+(defun rinichi/org-pomodoro-notify (msg)
+"Use terminal-notifier to show MSG as a notification."
+(start-process "org-pomodoro-notify" nil "terminal-notifier"
+                "-title" "Org Pomodoro"
+                "-message" msg))
 
-  ;; ポモドーロの各イベント（作業終了、短い休憩、長い休憩）で上記の通知関数を呼び出します。
-  (setq org-pomodoro-finished-hook
-        (lambda () (rinichi/org-pomodoro-notify "Pomodoro finished! Take a break.")))
-  (setq org-pomodoro-short-break-hook
-        (lambda () (rinichi/org-pomodoro-notify "Short break time!")))
-  (setq org-pomodoro-long-break-hook
-        (lambda () (rinichi/org-pomodoro-notify "Long break time!")))
+;; ポモドーロの各イベント（作業終了、短い休憩、長い休憩）で上記の通知関数を呼び出します。
+(setq org-pomodoro-finished-hook
+(lambda () (rinichi/org-pomodoro-notify "Pomodoro finished! Take a break.")))
+(setq org-pomodoro-short-break-hook
+(lambda () (rinichi/org-pomodoro-notify "Short break time!")))
+(setq org-pomodoro-long-break-hook
+(lambda () (rinichi/org-pomodoro-notify "Long break time!")))
 
 
-  ;; --- Org Appearance ---
-  ;; Orgファイル内の強調表示マーカー（*, /, _, +など）を非表示にして見た目をスッキリさせます。
-  (setq org-hide-emphasis-markers t)
+;; --- Org Appearance ---
+;; Orgファイル内の強調表示マーカー（*, /, _, +など）を非表示にして見た目をスッキリさせます。
+(setq org-hide-emphasis-markers t)
 
-  ;; 見出しレベルごとに文字の高さを調整します。
-  (set-face-attribute 'org-level-1 nil :height 1.3)
-  (set-face-attribute 'org-level-2 nil :height 1.1)
-  (set-face-attribute 'org-level-3 nil :height 1.05)
-  ;; (set-face-attribute 'org-level-4 nil :height 1.0)
-  )
+;; 見出しレベルごとに文字の高さを調整します。
+(set-face-attribute 'org-level-1 nil :height 1.3)
+(set-face-attribute 'org-level-2 nil :height 1.1)
+(set-face-attribute 'org-level-3 nil :height 1.05)
+;; (set-face-attribute 'org-level-4 nil :height 1.0)
+)
 
 
 ;;; Vterm (ターミナルエミュレータ) の設定

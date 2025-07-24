@@ -1,0 +1,16 @@
+#+title: Config
+
+
+
+#+TITLE: Doom Emacs Configuration
+#+PROPERTY: header-args:emacs-lisp :tangle config.el
+
+* UI
+#+BEGIN_SRC emacs-lisp
+(setq doom-theme 'doom-one)
+#+END_SRC
+
+* Packages
+#+BEGIN_SRC emacs-lisp
+(package! some-package)
+#+END_SRC

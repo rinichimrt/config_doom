@@ -1,210 +1,271 @@
-;;; config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; このファイルにプライベートな設定を記述します。
-;; このファイルを変更した後に 'doom sync' を実行する必要はありません。
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; 1. 基本設定 (General Settings)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; GPG設定、メール、スニペットなどで使用される個人情報を設定します (任意)
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets. It is optional.
 ;; (setq user-full-name "John Doe"
 ;;       user-mail-address "john@doe.com")
 
-;; Emacsフレームの透明度を設定 (背景を少し透過させる)
-(add-to-list 'default-frame-alist '(alpha . (0.95 0.95)))
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+;;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-;; ファイルを削除する際に、直接削除せずmacOSのゴミ箱へ移動
-(setq delete-by-moving-to-trash t)
-
-;; テキストモードで自動的に改行（折り返し）を無効化
-(setq text-mode-hook 'turn-off-auto-fill)
-
-;; ネイティブコンパイルを非同期で行うなどの設定
-(setq comp-deferred-compilation t)
-(setq native-comp-async-report-warnings-errors nil)
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; 2. 外観とUI (Appearance and UI)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; フォント設定 (フォント名とサイズ)
-(setq doom-font (font-spec :size 16))
 
-;; テーマ設定
+
+;; (setq doom-theme 'doom-one)
 (setq doom-theme 'doom-tokyo-night)
+;; (setq doom-theme 'doom-ephemeral)
 
-;; UI要素の調整
-(setq display-line-numbers-type t)   ; 行番号を常時表示
-(setq org-hide-emphasis-markers t)   ; Orgファイルの強調表示マーカーを非表示
-(tool-bar-mode 0)                   ; ツールバーを非表示
-(menu-bar-mode 0)                   ; メニューバーを非表示
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; 3. キーバインド (Keybindings)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; C-h/j/k/l でウィンドウ間を移動 (Normal, Visual, Insertモード)
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+;; switch between window with C-hjkl
 (map! :nvi "C-h" #'evil-window-left
       :nvi "C-j" #'evil-window-down
       :nvi "C-k" #'evil-window-up
       :nvi "C-l" #'evil-window-right)
 
 
+;; (use-package company
+;;   :config
+;;   (global-company-mode))
 
-(map! :nvi "C-d" #'evil-window-delete)
-;; C-c r で query-replace を呼び出し
+
+
+(setq doom-font (font-spec :size 16))
+
+
+;; (use-package copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;          ("<tab>" . copilot-accept-completion)
+;;          ("C-<tab>" . copilot-accept-completion-by-word)))
+
+
+
 (map! :map global-map
       "C-c r" #'query-replace)
 
-(map! :nvi "C-f" #'tab-bar-switch-to-last-tab)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; 4. パッケージごとの詳細設定 (Package-specific Configurations)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq comp-deferred-compilation t)
+(setq native-comp-async-report-warnings-errors nil)
 
-;;; Org Mode & Org-roam
-;;----------------------------------------------------------------------------
-;; Org関連ファイルのディレクトリ設定
-(setq org-directory (file-truename "/Users/rinichimrt/Library/CloudStorage/Box-Box/chri22024/Org/"))
-(setq org-roam-directory (file-truename (expand-file-name "Roam/" org-directory)))
 
-;; Org Agendaが検索するファイルを指定 (org-directory以下の全.orgファイル)
-(setq org-agenda-files (directory-files-recursively org-directory "\\.org$'"))
 
-;; org-roamのリンクの見た目をカスタマイズ
-(defface org-roam-link '((t (:inherit org-link)))
-  "Face for org-roam links."
-  :group 'org-roam)
+(add-hook 'vterm-mode-hook (lambda () (term-line-mode -1)))
+(setq text-mode-hook 'turn-off-auto-fill) ; 改行するかしないか
+(map! :leader
+      :desc "Start Pomodoro" "o p" #'org-pomodoro)
+(setq org-pomodoro-finished-sound nil  ; 作業終了時の音を無効化
+      org-pomodoro-short-break-sound nil  ; 短い休憩時の音を無効化
+      org-pomodoro-long-break-sound nil)  ; 長い休憩時の音を無効化
+(defun rinichi/org-pomodoro-notify (msg)
+  "Use terminal-notifier to show MSG as a notification."
+(start-process "org-pomodoro-notify" nil "terminal-notifier"
+                 "-title" "Org Pomodoro"
+                 "-message" msg))
+
+(setq org-pomodoro-finished-hook
+      (lambda () (rinichi/org-pomodoro-notify "Pomodoro finished! Take a break.")))
+
+(setq org-pomodoro-short-break-hook
+      (lambda () (rinichi/org-pomodoro-notify "Short break time!")))
+
+(setq org-pomodoro-long-break-hook
+      (lambda () (rinichi/org-pomodoro-notify "Long break time!")))
+
+
+;; ファイル削除時にmacOSのゴミ箱へ移動する
+(setq delete-by-moving-to-trash t)
+
+;; (use-package org
+;;   :init
+;;   (setq org-directory "~/"
+;;         org-daily-tasks-file (format "%s/tasks.org" org-directory))
+;;   :custom
+;;   (org-capture-templates
+;;     '(("d" "Weekdays TODO" entry (file org-daily-tasks-file) "%[~/.emacs.d/assets/org-templates/weekdays-todo.org]" :prepend t)
+;;       ("w" "Weekends TODO" entry (file org-daily-tasks-file) "%[~/.emacs.d/assets/org-templates/weekends-todo.org]" :prepend t))
+;;     ))
+;; org-computerの設定
+(use-package org
+  :init
+  ;; (setq org-directory "/Users/rinichimrt/Library/CloudStorage/Box-Box/chri22024/Org/")
+  (setq org-directory "~/Library/CloudStorage/GoogleDrive-rinichimrt@gmail.com/マイドライブ/02_Org_Roam/")
+
+  (defface org-roam-link '((t (:inherit org-link))) "Face for org-roam links." :group 'org-roam)
+  :custom
+  (org-capture-templates
+    '(("d" "Weekdays TODO" entry (file org-daily-tasks-file) "%[~/.emacs.d/assets/org-templates/weekdays-todo.org]" :prepend t)
+      ("w" "Weekends TODO" entry (file org-daily-tasks-file) "%[~/.emacs.d/assets/org-templates/weekends-todo.org]" :prepend t))
+    ))
+
+
 
 (after! org-roam
-  ;; リンクの表示テキストに接頭辞を追加 (例: 📝 タイトル)
+  ;; リンクの表示テキストと見た目をカスタマイズ
   (setq org-roam-node-display-template "📝 ${title}")
-  ;; リンクの色とスタイルを変更
   (set-face-attribute 'org-roam-link nil
                       :foreground "LightSkyBlue"
                       :weight 'semi-bold
-                      :underline nil))
+                      :underline nil)
+  (setq org-roam-agenda-restrict-to-user-files nil)
 
-;; Org-roamのキーバインド設定 (SPC n <key>)
-(after! org-roam
+  ;; Org-roamのキーバインド設定 (SPC n <key>)
   (map! :leader
         :prefix "n"
-        "f" #'org-roam-node-find        ; SPC n f でノード検索/作成
-        "i" #'org-roam-node-insert      ; SPC n i でリンク挿入
-        "b" #'org-roam-buffer-toggle    ; SPC n b でバックリンクバッファをトグル
-        "r" #'org-roam-db-sync          ; SPC n r でDBを同期
-        "t" #'org-roam-tag-find         ; SPC n t でタグ検索
+        "f" #'org-roam-node-find       ; SPC n f でノード検索/作成
+        "i" #'org-roam-node-insert     ; SPC n i でリンク挿入
+        "b" #'org-roam-buffer-toggle   ; SPC n b でバックリンクバッファをトグル
+        "r" #'org-roam-db-sync         ; SPC n r でDBを同期
+        "t" #'org-roam-tag-find        ; SPC n t でタグ検索
         "g" #'org-roam-ui-open
-        ))
+        "d" #'org-roam-dailies-capture-date))
 
-;; Org-roam UI の設定
+
+(after! org-roam-dailies
+  ;; この設定により、Org Roamのデイリーノートが自動でアジェンダ対象になります
+  (setq org-roam-dailies-include-in-agenda t))
+
+
 (after! org-roam-ui
-  (map! :leader
-        :prefix "n"
-        "g" #'org-roam-ui-open) ; SPC n g でOrg-roam UIを開く
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
 
-;;; Org Mode の追加設定 (org-capture, org-pomodoroなど)
-;;----------------------------------------------------------------------------
+
+
+;; レベル1の見出しを標準の1.4倍のサイズにする
+(set-face-attribute 'org-level-1 nil :height 1.3)
+
+;; レベル2の見出しを標準の1.3倍のサイズにする
+(set-face-attribute 'org-level-2 nil :height 1.1)
+
+;; レベル3の見出しを標準の1.2倍のサイズにする
+(set-face-attribute 'org-level-3 nil :height 1.05)
+
 (after! org
-  ;; 見出しレベルごとの文字の高さ調整
-  (set-face-attribute 'org-level-1 nil :height 1.3)
-  (set-face-attribute 'org-level-2 nil :height 1.1)
-  (set-face-attribute 'org-level-3 nil :height 1.05)
+  (setq org-hide-emphasis-markers t))
 
-  ;; Org Capture テンプレートを設定
-  (setq org-capture-templates
-        '(("d" "Weekdays TODO" entry
-           (file+headline (format "%s/tasks.org" org-directory) "Daily Tasks")
-           "%[~/.doom.d/assets/org-templates/weekdays-todo.org]" :prepend t)
-          ("w" "Weekends TODO" entry
-           (file+headline (format "%s/tasks.org" org-directory) "Daily Tasks")
-           "%[~/.doom.d/assets/org-templates/weekends-todo.org]" :prepend t)))
+;; 必要に応じて他のレベルも見出しを設定
+;(set-face-attribute 'org-level-5 nil :height 1.05)
 
-  ;; Org Pomodoro タイマーのリーダーキーを設定 (SPC o p)
-  (map! :leader
-        :desc "Start Pomodoro" "o p" #'org-pomodoro)
-
-  ;; ポモドーロの各種通知音を無効化
-  (setq org-pomodoro-finished-sound nil
-        org-pomodoro-short-break-sound nil
-        org-pomodoro-long-break-sound nil)
-
-  ;; macOSのterminal-notifierを使ってデスクトップ通知を出すための関数
-  (defun rinichi/org-pomodoro-notify (msg)
-    "Use terminal-notifier to show MSG as a notification."
-    (start-process "org-pomodoro-notify" nil "terminal-notifier"
-                   "-title" "Org Pomodoro"
-                   "-message" msg))
-
-  ;; ポモドーロの各イベントで通知関数を呼び出す
-  (setq org-pomodoro-finished-hook
-        (lambda () (rinichi/org-pomodoro-notify "Pomodoro finished! Take a break.")))
-  (setq org-pomodoro-short-break-hook
-        (lambda () (rinichi/org-pomodoro-notify "Short break time!")))
-  (setq org-pomodoro-long-break-hook
-        (lambda () (rinichi/org-pomodoro-notify "Long break time!"))))
+;; (use-package! org-modern
+;;   :hook (org-mode . org-modern-mode)
+;;   :config
+;;   (setq org-modern-star ’(“◉” “○” “✸” “✿” “✤” “✜” “◆” )))
+(tool-bar-mode 0) ;; macのGUIのツールバーを非表示にする
+(menu-bar-mode 0);; macのGUIのメニューバーを非表示にする
 
 
-;;; Vterm (ターミナルエミュレータ)
-;;----------------------------------------------------------------------------
-(after! vterm
-  (add-hook 'vterm-mode-hook (lambda () (term-line-mode -1))))
 
-
-;;; TRAMP (リモートファイル編集) のパフォーマンスチューニング
-;;----------------------------------------------------------------------------
+;; TRAMP接続時のラグをさらに改善するための設定
 (with-eval-after-load 'tramp
-  ;; 1. バージョン管理(Git等)の自動チェックを抑制
-  (setq vc-ignore-dir-regexp tramp-file-name-regexp
-        tramp-version-control nil)
+  ;; 1. TRAMP利用時にバージョン管理機能(vc-mode)を無効化する
+  ;;    これが体感速度に最も効く場合があります。
+  (add-hook 'tramp-pre-connection-hook
+            (lambda (_method _user _host)
+              (setq-default vc-ignore-dir-regexp tramp-file-name-regexp)))
 
-  ;; 2. ファイルの自動保存と変更チェックを無効化
-  (setq tramp-auto-save-directory nil
-        tramp-check-for-file-transfer-verdicts nil)
+  ;; 2. TRAMPでの自動保存を無効にする
+  ;;    入力中のカクつきを減らす効果が期待できます。
+  (setq tramp-auto-save-directory nil)
 
-  ;; 3. ファイル名補完時のディレクトリ再読み込みを減らす
-  (setq tramp-completion-reread-directory-timeout 30))
+  ;; 3. ファイル名補完時の再読み込みタイムアウトを延長（任意）
+  ;;    ディレクトリ内のファイル一覧表示のもたつきを軽減します。
+  (setq tramp-completion-reread-directory-timeout 30)
+  )
 
-;; TRAMPで開いたバッファにのみ適用される設定
-(add-hook 'tramp-mode-hook
-          (lambda ()
-            ;; 4. モードラインを極限までシンプルにする
-            (setq-local mode-line-format
-                        '("%e"
-                          mode-line-front-space
-                          "[TRAMP] "
-                          "%f"
-                          " "
-                          mode-line-modified
-                          mode-line-end-spaces))
-            ;; 5. リアルタイム構文チェックを無効化
-            (flycheck-mode -1)))
+
+;; 現在のディレクトリでmacOSのターミナルを開く関数を定義
+(defun my/open-macos-terminal-here ()
+  "Open the macOS Terminal app in the current buffer's directory."
+  (interactive)
+  (shell-command (concat "open -a Terminal " (shell-quote-argument default-directory))))
 
 
 (after! dired
   (setq dired-omit-files "^\\.[^.]") ;; .で始まり..でないものを隠す
   (add-hook 'dired-mode-hook #'dired-omit-mode))
 
-(volatile-highlights-mode t)
 
 
-(use-package mini-frame
-  :config
-  (mini-frame-mode 1))
+(map! :g "C-c t" #'my/open-macos-terminal-here)
 
-(setq x-gtk-resize-child-frames 'resize-mode)
-;; (custom-set-variables
-;;  '(mini-frame-show-parameters
-;;    '((top . 0.5)
-;;      (width . 0.8)
-;;      (left . 0.5)
-;;      (height . 25))))
+
+
+;;;### Org Roam Dailies のカスタマイズ ###
+;;----------------------------------------------------------------------------
+(after! org-roam-dailies
+  ;; 1. デイリーノートを保存するディレクトリのパスを定義します。
+  ;;    ここでは、あなたのorg-directoryの中に "daily" という名前のフォルダを指定しています。
+  (setq my-org-roam-dailies-dir (expand-file-name "daily/" org-directory))
+  ;; 3. Org Roam Dailiesに、上で定義したパスを教えます。
+  (setq org-roam-dailies-directory my-org-roam-dailies-dir)
+
+  ;; 4. デイリーノートをAgendaの対象にする設定（これは既存の設定です）
+  (setq org-roam-dailies-include-in-agenda t))
