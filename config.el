@@ -63,8 +63,8 @@
 (setq org-directory (expand-file-name "~/Library/CloudStorage/GoogleDrive-rinichimrt@gmail.com/マイドライブ/02_Org_Roam/"))
 (setq org-roam-directory (expand-file-name "01_Roam/" org-directory))
 
-;; `org-directory` 内のすべての.orgファイルをAgendaの対象にします。
-(setq org-agenda-files (list org-directory))
+;; `org-directory` 内のすべての.orgファイルを再帰的に検索してAgendaの対象にする
+(setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
 ;; `org-roam-link` フェイスを定義（エラー回避のため）
 (defface org-roam-link '((t (:inherit org-link))) "Face for org-roam links." :group 'org-roam)
