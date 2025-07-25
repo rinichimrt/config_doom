@@ -121,10 +121,10 @@
 
 ;;;### Vterm (ターミナルエミュレータ) ###
 ;;----------------------------------------------------------------------------
-(after! vterm
-  (add-hook 'vterm-mode-hook (lambda () (term-line-mode -1))))
-(setq vterm-shell "zsh"
-      vterm-shell-args '("-i"))
+;; (after! vterm
+;;   (add-hook 'vterm-mode-hook (lambda () (term-line-mode -1))))
+;; (setq vterm-shell "zsh"
+;;       vterm-shell-args '("-i"))
 
 
 ;;;### Dired (ファイラ) ###
