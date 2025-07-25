@@ -60,16 +60,17 @@
 
 ;;;### Org Mode & Org Roam ###
 ;;----------------------------------------------------------------------------
-(setq org-directory (expand-file-name "~/Library/CloudStorage/GoogleDrive-rinichimrt@gmail.com/マイドライブ/02_Org_Roam/"))
+;; (setq org-directory (expand-file-name "~/Library/CloudStorage/GoogleDrive-rinichimrt@gmail.com/マイドライブ/02_Org_Roam/"))
+(setq org-directory (expand-file-name "~/org/"))
 (setq org-roam-directory (expand-file-name "01_Roam/" org-directory))
 
-;; `org-directory` 内のすべての.orgファイルを再帰的に検索してAgendaの対象にする
-(setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
 ;; `org-roam-link` フェイスを定義（エラー回避のため）
 (defface org-roam-link '((t (:inherit org-link))) "Face for org-roam links." :group 'org-roam)
 
 (after! org
+  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+
   ;; 見出しレベルごとの文字の高さを調整
   (set-face-attribute 'org-level-1 nil :height 1.3)
   (set-face-attribute 'org-level-2 nil :height 1.1)
@@ -87,6 +88,32 @@
            "%[~/.doom.d/assets/org-templates/weekends-todo.org]" :prepend t))))
 
 
+;;;### Org Mode & Org Roam ###
+;;----------------------------------------------------------------------------
+;; 【テスト用設定】ローカルのDocumentsフォルダに一時的な場所を作成
+;; (setq org-directory (expand-file-name "~/Documents/org-test/"))
+;; (setq org-roam-directory (expand-file-name "roam/" org-directory))
+;; ;; `org-roam-link` フェイスを定義（エラー回避のため）
+;; (defface org-roam-link '((t (:inherit org-link))) "Face for org-roam links." :group 'org-roam)
+;; (after! org
+;;   ;; テスト用の単一ファイルを指定
+;;   (setq org-agenda-files (list (expand-file-name "tasks.org" org-directory)))
+
+;;   ;; 見出しレベルごとの文字の高さを調整
+;;   (set-face-attribute 'org-level-1 nil :height 1.3)
+;;   (set-face-attribute 'org-level-2 nil :height 1.1)
+;;   (set-face-attribute 'org-level-3 nil :height 1.05)
+;;   ;; 強調表示マーカーを非表示に
+;;   (setq org-hide-emphasis-markers t))
+
+;; (他のorg-roamやuse-packageの設定は、このテスト中は一旦そのままでOKです)
+;;
+;;
+;;
+;;
+;;
+;;
+;;
 (after! org-roam
   ;; リンクの表示テキストと見た目をカスタマイズ
   (setq org-roam-node-display-template "📝 ${title}")
