@@ -2,7 +2,6 @@
 
 
 
-#+TITLE: Doom Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle config.el
 
 * UI

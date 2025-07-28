@@ -192,3 +192,18 @@
 
 ;; 上で定義した関数を C-c t に割り当て（安全なキーに変更済み）
 (map! :g "C-c t" #'my/open-macos-terminal-here)
+
+
+
+
+
+
+
+(defun insert-today-todo-template ()
+  "今日の日付の見出しと複数の TODO 項目をカーソル位置に挿入する。"
+  (interactive)
+  (let ((date (format-time-string "%Y-%m-%d (%A)")))
+    (insert (format "* %s\n" date))
+    (insert "** TODO \n")
+    (insert "*** TODO \n")
+    (insert "** Memo \n")))
