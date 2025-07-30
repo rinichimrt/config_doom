@@ -207,3 +207,47 @@
     (insert "** TODO \n")
     (insert "*** TODO \n")
     (insert "** Memo \n")))
+
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq lsp-clients-python-servers '(pyright))))
+
+
+
+
+;; HomebrewとpipxへのPATHをEmacsに直接設定する
+(setenv "PATH" (concat "/opt/homebrew/bin:/Users/rinichimrt/.local/bin:" (getenv "PATH")))
+(setq exec-path (append '("/opt/homebrew/bin" "/Users/rinichimrt/.local/bin") exec-path))
+
+
+
+
+
+
+;; (after! lsp-mode
+;;   ;; flake8用の設定 (E, W, Fコードを担当)
+;;   (setq lsp-pylsp-plugins-flake8-ignore '("E251" "E303"))
+
+;;   ;; pydocstyle用の設定 (Dコードを担当)
+;;   (setq lsp-pylsp-plugins-pydocstyle-ignore '("D100" "D103")))
+
+;; (after! lsp-mode
+;;   ;; 診断のため、主要なLinterプラグインを全て無効化する
+;;   (setq lsp-pylsp-plugins-flake8-enabled nil)
+;;   (setq lsp-pylsp-plugins-pycodestyle-enabled nil)
+;;   (setq lsp-pylsp-plugins-pydocstyle-enabled nil))
+
+
+
+(after! lsp-mode
+  ;; flake8を有効にしつつ、特定の警告(E, W)を無視する
+  (setq lsp-pylsp-plugins-flake8-enabled t)
+  (setq lsp-pylsp-plugins-flake8-ignore '("E251" "E303"))
+
+  ;; pydocstyleを有効にしつつ、特定の警告(D)を無視する
+  (setq lsp-pylsp-plugins-pydocstyle-enabled t)
+  (setq lsp-pylsp-plugins-pydocstyle-ignore '("D100" "D103"))
+
+  ;; pycodestyleはflake8と機能が重複するため、無効のままにしておく
+  (setq lsp-pylsp-plugins-pycodestyle-enabled nil))
