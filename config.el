@@ -123,6 +123,9 @@
                       :underline nil)
   (setq org-roam-agenda-restrict-to-user-files nil)
 
+
+
+
   ;; Org-roamのキーバインド設定 (SPC n <key>)
   (map! :leader
         :prefix "n"
