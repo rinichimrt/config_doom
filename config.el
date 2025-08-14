@@ -28,7 +28,7 @@
 (setq doom-font (font-spec :size 16))
 
 ;; テーマ設定
-;; (setq doom-theme 'doom-tokyo-night)
+(setq doom-theme 'doom-tokyo-night)
 
 ;; UI要素の調整
 (setq display-line-numbers-type t) ; 行番号を常時表示
