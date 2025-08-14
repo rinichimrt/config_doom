@@ -3,6 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(doom-ayu-mirage))
  '(custom-safe-themes
    '("83550d0386203f010fa42ad1af064a766cfec06fc2f42eb4f2d89ab646f3ac01"
      "5244ba0273a952a536e07abaad1fdf7c90d7ebb3647f36269c23bfd1cf20b0b8"
